@@ -1,0 +1,38 @@
+name: Terraform Workflow
+
+on:
+  push:
+    branches:
+      - feature/mychange   # abhi tumhari branch ye hai
+  pull_request:
+    branches:
+      - feature/mychange
+
+jobs:
+  terraform:
+    runs-on: selfhostedGitHubAgent   # tumhara custom runner ka label
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v3
+        with:
+          terraform_version: 1.9.5
+
+      - name: Terraform Init
+        run: terraform init
+
+      - name: Terraform Validate
+        run: terraform validate
+
+      - name: Terraform Plan
+        run: terraform plan
+
+      # ⚠️ Apply ko abhi optional rakho
+      - name: Terraform Apply
+        if: github.ref == 'refs/heads/feature/mychange' && github.event_name == 'push'
+        run: terraform apply -auto-approve
+
+
