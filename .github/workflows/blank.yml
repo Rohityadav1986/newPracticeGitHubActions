@@ -7,7 +7,7 @@ on:
 
 jobs:
   terraform-install:
-    runs-on: [self-hosted, Windows]   # runner labels ka match
+    runs-on: [self-hosted, Windows]   # runner labels ka ma
     steps:
       - name: Checkout Code
         uses: actions/checkout@v4
